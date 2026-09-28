@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prep Certif Cisco - Modules 5, 6 & 7</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --success: #10b981;
+      --success-bg: rgba(16, 185, 129, 0.12);
+      --danger: #ef4444;
+      --danger-bg: rgba(239, 68, 68, 0.12);
+      --warning: #f59e0b;
+      --warning-bg: rgba(245, 158, 11, 0.12);
+      --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background: #0f172a;
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(8px);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .badge-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-blue { background: #1e3a8a; color: #93c5fd; }
+    .badge-red { background: #450a0a; color: #fca5a5; }
+    .badge-amber { background: #451a03; color: #fcd34d; }
+
+    nav {
+      display: flex;
+      gap: 8px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background: #1e293b;
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 24px auto 0;
+      padding: 0 20px;
+    }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .layout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Panneau de filtres */
+    .filter-bar {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .filter-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .chip-btn {
+      background: #1e293b;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .chip-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: #60a5fa;
+    }
+
+    /* Carte de Question */
+    .q-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+      transition: border-color 0.2s;
+      position: relative;
+    }
+
+    .q-card.resolved-correct {
+      border-left: 4px solid var(--success);
+    }
+
+    .q-card.resolved-wrong {
+      border-left: 4px solid var(--danger);
+    }
+
+    .q-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      gap: 12px;
+    }
+
+    .q-meta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .q-index {
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .q-domain {
+      font-size: 0.72rem;
+      background: #1e293b;
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: #94a3b8;
+    }
+
+    .q-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #f9fafb;
+      margin-bottom: 16px;
+      line-height: 1.45;
+    }
+
+    .q-snippet {
+      background: #0b0f19;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: #a5f3fc;
+      margin-bottom: 16px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .option-item {
+      background: #162032;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 12px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all 0.15s;
+    }
+
+    .option-item:hover:not(.locked) {
+      background: #1e2e4a;
+      border-color: #3b82f6;
+    }
+
+    .option-radio {
+      margin-top: 3px;
+    }
+
+    .option-text {
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      flex: 1;
+    }
+
+    .option-item.opt-correct {
+      background: var(--success-bg) !important;
+      border-color: var(--success) !important;
+    }
+
+    .option-item.opt-wrong {
+      background: var(--danger-bg) !important;
+      border-color: var(--danger) !important;
+    }
+
+    /* Feedback box */
+    .feedback-box {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      display: none;
+    }
+
+    .feedback-box.correct {
+      display: block;
+      background: var(--success-bg);
+      border: 1px solid var(--success);
+      color: #6ee7b7;
+    }
+
+    .feedback-box.wrong {
+      display: block;
+      background: var(--danger-bg);
+      border: 1px solid var(--danger);
+      color: #fca5a5;
+    }
+
+    .luck-warning {
+      margin-top: 8px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      background: var(--warning-bg);
+      border: 1px solid var(--warning);
+      color: #fde68a;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feedback-actions {
+      margin-top: 10px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .link-cours-btn {
+      color: #93c5fd;
+      text-decoration: underline;
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    /* Sidebar Statistique & Scoring */
+    .sticky-panel {
+      position: sticky;
+      top: 75px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .grade-display {
+      text-align: center;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 16px;
+    }
+
+    .grade-value {
+      font-size: 2.8rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .grade-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .grade-pass { color: var(--success); }
+    .grade-fail { color: var(--danger); }
+
+    .score-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.85rem;
+    }
+
+    .score-row {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-muted);
+    }
+
+    .score-row strong {
+      color: #fff;
+    }
+
+    .action-btn {
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-size: 0.88rem;
+    }
+
+    .action-btn:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background: #1e293b;
+      border: 1px solid var(--card-border);
+      color: #cbd5e1;
+      margin-top: 8px;
+    }
+
+    .btn-secondary:hover {
+      background: #334155;
+    }
+
+    /* Onglet Cours */
+    .course-section {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      scroll-margin-top: 90px;
+    }
+
+    .course-section.highlight-target {
+      outline: 2px solid var(--accent);
+      background: #131d31;
+    }
+
+    .course-section h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #60a5fa;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .course-section h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 16px 0 8px;
+      color: #f1f5f9;
+    }
+
+    .course-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 0.85rem;
+    }
+
+    .course-table th, .course-table td {
+      border: 1px solid #1e293b;
+      padding: 8px 12px;
+      text-align: left;
+    }
+
+    .course-table th {
+      background: #0f172a;
+      color: #94a3b8;
+    }
+
+    .rule-box {
+      background: #0f172a;
+      border-left: 3px solid #3b82f6;
+      padding: 10px 14px;
+      margin: 10px 0;
+      font-size: 0.85rem;
+      border-radius: 0 6px 6px 0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      background: #00000040;
+      color: #38bdf8;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <h1>Cisco Security Certif Engine</h1>
+        <div class="badge-bar">
+          <span class="badge badge-blue">Docimologie 70%=10/20</span>
+          <span class="badge badge-red">Détecteur de chance</span>
+        </div>
+      </div>
+      <nav>
+        <button class="tab-btn active" onclick="switchTab('quiz')">QCM d'Entraînement</button>
+        <button class="tab-btn" onclick="switchTab('course')">Fiches de Révision</button>
+        <button class="tab-btn" onclick="switchTab('diagnostic')">Bilan & Lacunes</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- VUE QCM -->
+    <div id="view-quiz">
+      <div class="filter-bar">
+        <span class="filter-label">Domaine :</span>
+        <button class="chip-btn active" onclick="setFilter('all', this)">Tous (<span id="count-all">50</span>)</button>
+        <button class="chip-btn" onclick="setFilter('privilege_cli', this)">Privilèges & Vues</button>
+        <button class="chip-btn" onclick="setFilter('syslog_ntp', this)">Syslog & NTP</button>
+        <button class="chip-btn" onclick="setFilter('hardening', this)">AutoSecure & Résilience</button>
+        <button class="chip-btn" onclick="setFilter('snmp', this)">SNMPv3</button>
+        <button class="chip-btn" onclick="setFilter('aaa', this)">AAA & TACACS+/RADIUS</button>
+      </div>
+
+      <div class="layout-grid">
+        <section id="questions-container">
+          <!-- Les questions sont générées en JavaScript -->
+        </section>
+
+        <aside class="sticky-panel">
+          <div class="stat-card">
+            <h3 style="font-size: 0.95rem; margin-bottom: 8px;">Évaluation Docimologique</h3>
+            <div class="grade-display">
+              <div id="calc-grade" class="grade-value grade-fail">0.0<span style="font-size:1.2rem">/20</span></div>
+              <div class="grade-sub">Barème strict prof : 70% de réussite = 10,0/20</div>
+            </div>
+            <div class="score-breakdown">
+              <div class="score-row"><span>Questions traitées :</span><strong id="stat-answered">0 / 50</strong></div>
+              <div class="score-row"><span>Réponses correctes :</span><strong id="stat-correct" style="color:var(--success)">0</strong></div>
+              <div class="score-row"><span>Erreurs confirmées :</span><strong id="stat-wrong" style="color:var(--danger)">0</strong></div>
+              <div class="score-row"><span>Réponses chanceuses (?) :</span><strong id="stat-luck" style="color:var(--warning)">0</strong></div>
+              <div class="score-row"><span>Taux brut :</span><strong id="stat-rate">0 %</strong></div>
+            </div>
+            <button class="action-btn" style="margin-top:16px;" onclick="startRemediationMode()">Travailler mes lacunes (<span id="remediation-count">0</span>)</button>
+            <button class="action-btn btn-secondary" onclick="resetAll()">Réinitialiser le QCM</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- VUE COURS -->
+    <div id="view-course" class="hidden">
+      <div style="max-width: 900px; margin: 0 auto;">
+        
+        <div id="course-privilege" class="course-section">
+          <h2>1. Niveaux de Privilèges Cisco IOS (Module 5.1)</h2>
+          <div class="rule-box">
+            Commandes EXEC de base réparties sur 16 niveaux (0 à 15).
+          </div>
+          <table class="course-table">
+            <tr><th>Niveau</th><th>Nom / Portée</th><th>Commandes par défaut</th></tr>
+            <tr><td><strong>0</strong></td><td>Réservé (Accès minimal)</td><td><code>disable</code>, <code>enable</code>, <code>exit</code>, <code>help</code>, <code>logout</code></td></tr>
+            <tr><td><strong>1</strong></td><td>User EXEC (Défaut utilisateur)</td><td>Commandes d'affichage de base (prompt <code>Router&gt;</code>)</td></tr>
+            <tr><td><strong>2 à 14</strong></td><td><strong>Personnalisables</strong></td><td>Vides par défaut, configurables par l'administrateur</td></tr>
+            <tr><td><strong>15</strong></td><td>Privileged EXEC (Root / Enable)</td><td>Toutes les commandes système (prompt <code>Router#</code>)</td></tr>
+          </table>
+          <h3>Syntaxe exacte de configuration</h3>
+          <p>Pour déplacer une commande vers un niveau personnalisé :</p>
+          <p><code>Router(config)# privilege exec level 14 show access-lists</code></p>
+        </div>
+
+        <div id="course-views" class="course-section">
+          <h2>2. Role-Based CLI : Vues et Superviews (Module 5.2)</h2>
+          <div class="rule-box">
+            Permet de découper les droits selon les rôles métiers sans se limiter à la hiérarchie rigide des privilèges.
+          </div>
+          <h3>Règles reines des Vues et Superviews</h3>
+          <ul style="margin-left: 20px; font-size: 0.88rem; line-height: 1.6;">
+            <li><strong>Prérequis :</strong> <code>aaa new-model</code> doit obligatoirement être activé.</li>
+            <li><strong>Création d'une vue :</strong> <code>Router(config)# parser view NOM-VUE</code>.</li>
+            <li><strong>Superview :</strong> Contient des <em>vues</em> associées via la commande <code>view NOM-VUE</code>.</li>
+            <li><strong>Règle d'exclusion des superviews :</strong> On <strong>ne peut pas</strong> assigner directement des commandes individuelles à une superview. Elle ne stocke que des vues existantes.</li>
+            <li><strong>Indicateur visuel CLI :</strong> Dans la commande <code>show parser view all</code>, une superview est systématiquement désignée par un astérisque (ex: <code>JR-ADMIN *</code>).</li>
+            <li><strong>Indépendance :</strong> Supprimer une superview ne supprime jamais les vues enfants qui la composent.</li>
+          </ul>
+        </div>
+
+        <div id="course-syslog" class="course-section">
+          <h2>3. Syslog : Architecture, Format et Niveaux (Module 6.5)</h2>
+          <p>Structure standard d'une ligne Syslog :</p>
+          <p><code>*Mar 1 00:02:59.451: %OSPF-5-ADJCHG: Process 99, Nbr 172.16.10.5 on Serial0/0 from LOADING to FULL</code></p>
+          <ul style="margin: 10px 0 10px 20px; font-size: 0.85rem;">
+            <li><code>OSPF</code> = <strong>Facility</strong> (le protocole ou module émetteur).</li>
+            <li><code>5</code> = <strong>Severity Level</strong> (niveau de gravité).</li>
+            <li><code>ADJCHG</code> = <strong>MNEMONIC</strong> (code d'événement unique).</li>
+          </ul>
+          <table class="course-table">
+            <tr><th>Niveau</th><th>Nom</th><th>Définition / Usage</th></tr>
+            <tr><td><strong>0</strong></td><td>Emergency</td><td>Système inutilisable</td></tr>
+            <tr><td><strong>1</strong></td><td>Alert</td><td>Action immédiate requise</td></tr>
+            <tr><td><strong>2</strong></td><td>Critical</td><td>Condition critique</td></tr>
+            <tr><td><strong>3</strong></td><td>Error</td><td>Condition d'erreur</td></tr>
+            <tr><td><strong>4</strong></td><td>Warning</td><td>Avertissement</td></tr>
+            <tr><td><strong>5</strong></td><td>Notice</td><td>Normal mais significatif (ex: changement de voisinage OSPF)</td></tr>
+            <tr><td><strong>6</strong></td><td>Informational</td><td>Messages normaux d'information</td></tr>
+            <tr><td><strong>7</strong></td><td>Debugging</td><td>Accessible uniquement par l'admin via CLI (le plus verbeux)</td></tr>
+          </table>
+        </div>
+
+        <div id="course-ntp" class="course-section">
+          <h2>4. Network Time Protocol - NTP (Module 6.6)</h2>
+          <div class="rule-box">
+            NTP synchronise l'horloge des périphériques. Une hiérarchie en strates (Stratum) de 1 à 15 définit la distance à l'horloge de référence.
+          </div>
+          <ul style="margin-left: 20px; font-size: 0.88rem; line-height: 1.6;">
+            <li><strong>Stratum 1 :</strong> Équipement directement synchronisé sur une horloge atomique/GPS (Stratum 0).</li>
+            <li><strong>Stratum 2 :</strong> Équipement synchronisé sur un serveur Stratum 1.</li>
+            <li><strong>Lecture de <code>show ntp status</code> :</strong>
+              <br>Si la sortie affiche <code>Clock is synchronized, stratum 2, reference is 192.168.1.1</code>, cela prouve que le routeur actuel est <strong>stratum 2</strong> et que son serveur source est <strong>192.168.1.1 (qui lui est donc stratum 1)</strong>.
+            </li>
+          </ul>
+        </div>
+
+        <div id="course-hardening" class="course-section">
+          <h2>5. Sécurisation : AutoSecure, Resilient Config & SCP (Module 6.1 & 6.2)</h2>
+          <h3>Cisco IOS Resilient Configuration</h3>
+          <p>Maintient une copie sécurisée en flash inaccessible par les commandes utilisateur standard :</p>
+          <ul style="margin-left: 20px; font-size: 0.85rem;">
+            <li><code>secure boot-image</code> : verrouille l'image Cisco IOS courante.</li>
+            <li><code>secure boot-config</code> : verrouille le fichier de configuration de démarrage (running-config sauvegardée).</li>
+          </ul>
+          <h3>Cisco AutoSecure</h3>
+          <p>Exécutable en interactif (<code>auto secure</code>) ou silencieux (<code>auto secure no-interact</code>). En mode interactif, il demande :</p>
+          <ul style="margin-left: 20px; font-size: 0.85rem;">
+            <li>Le mot de passe enable secret.</li>
+            <li>Le texte de la bannière légale (security banner).</li>
+            <li>L'identification des interfaces connectées au réseau public (untrusted) ou privé (trusted).</li>
+          </ul>
+          <h3>Secure Copy Protocol (SCP)</h3>
+          <p>Permet le transfert de configuration chiffré via SSH. Prérequis :</p>
+          <ul style="margin-left: 20px; font-size: 0.85rem;">
+            <li>SSH activé et opérationnel sur le routeur.</li>
+            <li>Activation explicite : <code>ip scp server enable</code>.</li>
+            <li>Compte utilisateur local avec privilège 15.</li>
+          </ul>
+        </div>
+
+        <div id="course-snmp" class="course-section">
+          <h2>6. SNMPv3 Niveaux de Sécurité (Module 6.7)</h2>
+          <table class="course-table">
+            <tr><th>Niveau de sécurité</th><th>Authentification</th><th>Chiffrement (Confidentialité)</th></tr>
+            <tr><td><code>noAuthNoPriv</code></td><td>Aucune (nom d'utilisateur seul)</td><td>Aucun</td></tr>
+            <tr><td><code>authNoPriv</code></td><td>HMAC-MD5 ou HMAC-SHA</td><td>Aucun</td></tr>
+            <tr><td><code>authPriv</code></td><td>HMAC-MD5 ou HMAC-SHA</td><td>DES, 3DES ou AES</td></tr>
+          </table>
+        </div>
+
+        <div id="course-aaa" class="course-section">
+          <h2>7. Fondamentaux AAA & Architecture (Module 7.1 & 7.2)</h2>
+          <ul style="margin-left: 20px; font-size: 0.88rem; line-height: 1.6;">
+            <li><strong>Authentication :</strong> Valide l'identité du sujet (« Qui êtes-vous ? » via mot de passe, token, certificat).</li>
+            <li><strong>Authorization :</strong> Détermine les droits et services accessibles (« Qu'avez-vous le droit de faire ? » ex: restreindre l'usage au seul protocole FTP ou à un jeu de commandes).</li>
+            <li><strong>Accounting :</strong> Mesure et enregistre les actions (« Qu'avez-vous consommé ou tapé ? » pour l'audit et la facturation).</li>
+            <li><strong>Différence <code>login local</code> vs <code>aaa new-model</code> :</strong> <code>login local</code> applique uniquement la base locale sans possibilité de chaîner des méthodes de repli. AAA autorise des listes ordonnées (ex: contacter le serveur TACACS+, et en cas de non-réponse, basculer sur la base locale).</li>
+          </ul>
+        </div>
+
+        <div id="course-tacacs-radius" class="course-section">
+          <h2>8. TACACS+ contre RADIUS (Module 7.3 & 7.4)</h2>
+          <table class="course-table">
+            <tr><th>Critère</th><th>TACACS+</th><th>RADIUS</th></tr>
+            <tr><td><strong>Standard</strong></td><td>Propriétaire Cisco</td><td>Standard ouvert IETF (RFC 2865/2866)</td></tr>
+            <tr><td><strong>Protocole / Port</strong></td><td><strong>TCP port 49</strong></td><td><strong>UDP ports 1812 & 1813</strong> (anciens 1645/1646)</td></tr>
+            <tr><td><strong>Chiffrement</strong></td><td><strong>Intégralité du paquet</strong> (corps complet)</td><td><strong>Mot de passe uniquement</strong></td></tr>
+            <tr><td><strong>Processus Auth / Authz</strong></td><td><strong>Séparés</strong> (contrôle fin des commandes)</td><td><strong>Combinés</strong> en une transaction unique</td></tr>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- VUE BILAN & DIAGNOSTIC -->
+    <div id="view-diagnostic" class="hidden">
+      <div style="max-width: 900px; margin: 0 auto;">
+        <div class="stat-card" style="margin-bottom: 24px;">
+          <h2 style="font-size:1.3rem; margin-bottom:12px;">Diagnostic des Faiblesses et Taux de Suspicion</h2>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:20px;">
+            Le système détecte les réussites potentiellement acquises au hasard : si un domaine présente des erreurs, toute bonne réponse dans ce domaine est requalifiée en <em>« réussite suspecte »</em> jusqu'à ce que la maîtrise soit totale.
+          </p>
+
+          <div id="diagnostic-domain-list" style="display:flex; flex-direction:column; gap:12px;">
+            <!-- Domaines analysés dynamiquement -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // -------------------------------------------------------------
+    // BANQUE DE 50 QUESTIONS (Distracteurs homogènes, zéro giveaway)
+    // -------------------------------------------------------------
+    const questionsData = [
+      // MODULE 5: PRIVILEGES & VUES
+      {
+        id: 1,
+        domain: "privilege_cli",
+        domainName: "Privilèges & Vues",
+        courseRef: "course-views",
+        title: "Quelles sont les trois caractéristiques des superviews dans la fonctionnalité Role-Based CLI de Cisco IOS ? (Choisir 3 propositions)",
+        multi: true,
+        correctAnswers: [0, 3, 4],
+        options: [
+          "La suppression d'une superview ne supprime pas les vues CLI qui lui sont rattachées.",
+          "Une superview permet de configurer directement de nouvelles commandes sans vue sous-jacente.",
+          "La commande 'enable superview' est utilisée pour entrer dans la superview spécifiée.",
+          "Il est impossible de configurer directement des commandes au sein d'une superview.",
+          "Une même vue CLI peut être partagée et intégrée au sein de plusieurs superviews.",
+          "L'accès de privilège de niveau 1 est suffisant pour initialiser et configurer une superview."
+        ],
+        explanation: "Une superview regroupe uniquement des vues existantes. On ne peut pas lui assigner de commandes directes, sa suppression n'efface pas les vues membres, et une vue peut être membre de plusieurs superviews."
+      },
+      {
+        id: 2,
+        domain: "privilege_cli",
+        domainName: "Privilèges & Vues",
+        courseRef: "course-views",
+        title: "Un administrateur saisit la commande 'Router(config)# parser view TECH-view'. Quel est le but exact de cette commande ?",
+        options: [
+          "Basculer la session en cours dans la superview nommée TECH-view.",
+          "Créer une vue CLI ou entrer dans son mode de configuration nommé TECH-view.",
+          "Afficher l'état de configuration courante de la vue CLI nommée TECH-view.",
+          "Attribuer le mot de passe secret de chiffrement pour la vue TECH-view."
+        ],
+        correct: 1,
+        explanation: "La commande 'parser view <nom>' en mode de configuration globale crée la vue et bascule le terminal en invite 'Router(config-view)#' pour y ajouter des commandes."
+      },
+      {
+        id: 3,
+        domain: "privilege_cli",
+        domainName: "Privilèges & Vues",
+        courseRef: "course-privilege",
+        title: "Quels niveaux de privilèges Cisco IOS sont disponibles pour attribuer des privilèges personnalisés définis par l'administrateur ?",
+        options: [
+          "Les niveaux de privilège 0 et 1 uniquement.",
+          "Les niveaux de privilège 2 à 14.",
+          "Les niveaux de privilège 0, 1 et 15.",
+          "Les niveaux de privilège 1 à 15."
+        ],
+        correct: 1,
+        explanation: "Les niveaux 0 (accès minime), 1 (user EXEC) et 15 (privileged EXEC) sont réservés par Cisco. Les niveaux 2 à 14 sont totalement personnalisables."
+      },
+      {
+        id: 4,
+        domain: "privilege_cli",
+        domainName: "Privilèges & Vues",
+        courseRef: "course-privilege",
+        title: "Un administrateur souhaite affecter la commande 'show access-lists' au niveau de privilège 14. Quelle commande de configuration globale applique correctement ce paramètre ?",
+        options: [
+          "Router(config)# privilege exec level 14 show access-lists",
+          "Router(config)# privilege level 14 command show access-lists",
+          "Router(config)# set privilege level 14 show access-lists",
+          "Router(config)# show access-lists privilege level 14"
+        ],
+        correct: 0,
+        explanation: "La syntaxe rigoureuse Cisco IOS est : 'privilege <mode> level <niveau> <commande>'."
+      },
+      {
+        id: 5,
+        domain: "privilege_cli",
+        domainName: "Privilèges & Vues",
+        courseRef: "course-views",
+        title: "Un étudiant tape la commande 'show parser view all' sur R1 et observe la ligne suivante : 'JR-ADMIN *'. Que signifie le symbole astérisque (*) ?",
+        options: [
+          "Il s'agit d'une vue de type root view active.",
+          "Il s'agit d'une vue CLI vide sans aucune commande configurée.",
+          "Il indique que cette entrée est une superview.",
+          "Il indique que la vue est actuellement verrouillée par un mot de passe."
+        ],
+        correct: 2,
+        explanation: "Dans le tableau récapitulatif généré par 'show parser view all', un astérisque (*) à côté d'un nom signale formellement une superview."
+      },
+      {
+        id: 6,
+        domain: "privilege_cli",
+        domainName: "Privilèges & Vues",
+        courseRef: "course-views",
+        title: "Quel prérequis système doit impérativement être configuré sur le routeur avant de pouvoir créer et utiliser les vues Role-Based CLI ?",
+        options: [
+          "Le protocole de transport SSH v2 doit être actif sur les lignes VTY.",
+          "La commande globale 'aaa new-model' doit être préalablement activée.",
+          "Un serveur TACACS+ externe doit être joignable et configuré.",
+          "Le niveau de privilège 14 doit être affecté à la commande enable."
+        ],
+        correct: 1,
+        explanation: "L'architecture Role-Based CLI s'appuie obligatoirement sur les fonctionnalités AAA de Cisco IOS. 'aaa new-model' est un prérequis absolu."
+      },
+      {
+        id: 7,
+        domain: "privilege_cli",
+        domainName: "Privilèges & Vues",
+        courseRef: "course-privilege",
+        title: "Parmi les commandes suivantes, laquelle est disponible par défaut dans le niveau de privilège Cisco 0 ?",
+        options: [
+          "configure terminal",
+          "show running-config",
+          "enable",
+          "ping"
+        ],
+        correct: 2,
+        explanation: "Le niveau 0 ne contient qu'une poignée de commandes fondamentales : disable, enable, exit, help et logout."
+      },
+      {
+        id: 8,
+        domain: "privilege_cli",
+        domainName: "Privilèges & Vues",
+        courseRef: "course-views",
+        title: "Quelle commande doit exécuter un opérateur pour passer d'une vue standard à une autre vue appelée 'NET-ADMIN' ?",
+        options: [
+          "Router# enable view NET-ADMIN",
+          "Router# parser view switch NET-ADMIN",
+          "Router# set view NET-ADMIN",
+          "Router# session view NET-ADMIN"
+        ],
+        correct: 0,
+        explanation: "Le basculement vers une vue se fait depuis le mode EXEC privilégié au moyen de la commande 'enable view <nom-de-vue>'."
+      },
+
+      // MODULE 6: SYSLOG & NTP
+      {
+        id: 9,
+        domain: "syslog_ntp",
+        domainName: "Syslog & NTP",
+        courseRef: "course-syslog",
+        title: "Soit le message d'événement : '*Mar 1 00:02:59.451: %OSPF-5-ADJCHG: Process 99...'. Quelle chaîne correspond au champ 'facility' ?",
+        options: [
+          "level 5",
+          "OSPF",
+          "ADJCHG",
+          "Process 99"
+        ],
+        correct: 1,
+        explanation: "Dans la structure '%FACILITY-SEVERITY-MNEMONIC', 'OSPF' est la facility (le protocole ou composant source)."
+      },
+      {
+        id: 10,
+        domain: "syslog_ntp",
+        domainName: "Syslog & NTP",
+        courseRef: "course-syslog",
+        title: "Quel niveau de sévérité Syslog est accessible exclusivement à l'administrateur et produit les données de diagnostic les plus verbeuses via la CLI ?",
+        options: [
+          "Niveau 1 - Alert",
+          "Niveau 3 - Error",
+          "Niveau 5 - Notice",
+          "Niveau 7 - Debugging"
+        ],
+        correct: 3,
+        explanation: "Le niveau 7 (Debugging) est le niveau le plus détaillé, déclenché uniquement par les commandes de débogage en CLI."
+      },
+      {
+        id: 11,
+        domain: "syslog_ntp",
+        domainName: "Syslog & NTP",
+        courseRef: "course-syslog",
+        title: "Un routeur génère un message avec la sévérité 5. Quel intitulé et quelle signification correspondent à ce niveau Syslog ?",
+        options: [
+          "Warning : Une anomalie matérielle non bloquante a été observée.",
+          "Notice : Événement normal mais significatif, tel qu'un changement d'état d'interface ou de routage.",
+          "Critical : Une panne d'un sous-système critique requiert un redémarrage.",
+          "Informational : Un simple message d'état périodique sans conséquence réseau."
+        ],
+        correct: 1,
+        explanation: "Le niveau 5 est nommé 'Notice'. Il indique une condition normale mais importante (ex: adjacence OSPF établie ou tombée)."
+      },
+      {
+        id: 12,
+        domain: "syslog_ntp",
+        domainName: "Syslog & NTP",
+        courseRef: "course-ntp",
+        title: "La sortie 'show ntp status' indique : 'Clock is synchronized, stratum 2, reference is 192.168.1.1'. Quelles sont les deux assertions vraies ? (Choisir 2)",
+        multi: true,
+        correctAnswers: [0, 2],
+        options: [
+          "L'adresse IP du serveur de temps amont fournissant l'heure au routeur est 192.168.1.1.",
+          "Le routeur local fonctionne en tant qu'horloge maîtresse de stratum 1.",
+          "Le serveur de référence situé à l'adresse 192.168.1.1 est un équipement de stratum 1.",
+          "Le routeur requiert impérativement la commande 'clock set' pour conserver sa synchronisation.",
+          "Le stratum du routeur passera automatiquement à 3 si un deuxième pair est ajouté."
+        ],
+        correctAnswers: [0, 2],
+        explanation: "Le routeur est synchronisé sur 192.168.1.1. Comme le routeur est au stratum 2, sa source de synchronisation est obligatoirement au stratum 1."
+      },
+      {
+        id: 13,
+        domain: "syslog_ntp",
+        domainName: "Syslog & NTP",
+        courseRef: "course-ntp",
+        title: "Dans l'architecture hiérarchique NTP, quelle est la définition exacte d'un équipement de Stratum 1 ?",
+        options: [
+          "Un serveur connecté directement à une horloge de référence atomique ou GPS de Stratum 0.",
+          "Un routeur de bordure synchronisé directement sur un serveur public distant via UDP 123.",
+          "Une horloge atomique autonome au césium ne disposant d'aucune interface réseau.",
+          "Un client NTP final configuré sans possibilité de redistribuer le temps à d'autres hôtes."
+        ],
+        correct: 0,
+        explanation: "Les sources de temps de référence primaires (GPS/atomiques) sont Stratum 0. Les serveurs directement reliés à ces sources physiques sont Stratum 1."
+      },
+      {
+        id: 14,
+        domain: "syslog_ntp",
+        domainName: "Syslog & NTP",
+        courseRef: "course-syslog",
+        title: "Vers quel emplacement par défaut Cisco IOS transmet-il les messages Syslog générés si aucune commande 'logging' spécifique n'a été introduite ?",
+        options: [
+          "Vers le tampon interne en mémoire RAM (logging buffered).",
+          "Exclusivement vers le port console de l'équipement.",
+          "Vers le serveur Syslog broadcast du sous-réseau local.",
+          "Dans un fichier journal sécurisé au sein de la mémoire NVRAM."
+        ],
+        correct: 1,
+        explanation: "Par défaut sur Cisco IOS, la console reçoit tous les messages de journalisation (logging console activé à l'état initial)."
+      },
+
+      // MODULE 6: HARDENING & RESILIENCE
+      {
+        id: 15,
+        domain: "hardening",
+        domainName: "AutoSecure & Résilience",
+        courseRef: "course-hardening",
+        title: "Quelles sont les deux caractéristiques clés de la fonctionnalité Cisco IOS Resilient Configuration ? (Choisir 2)",
+        multi: true,
+        correctAnswers: [1, 3],
+        options: [
+          "Elle exporte périodiquement une copie miroir de la configuration active vers un serveur TFTP.",
+          "Elle réduit le temps d'indisponibilité si l'image ou la configuration en flash venait à être effacée.",
+          "Elle duplique les tables d'état du plan de contrôle directement dans la mémoire ROMMON.",
+          "Elle conserve une copie sécurisée et masquée en flash de l'image IOS et de la configuration.",
+          "Elle remplace intégralement le mécanisme de mot de passe du mode ROMMON."
+        ],
+        explanation: "La configuration résiliente (secure boot-image / secure boot-config) maintient des copies sécurisées en flash invisibles aux suppressions classiques pour réparer immédiatement le routeur."
+      },
+      {
+        id: 16,
+        domain: "hardening",
+        domainName: "AutoSecure & Résilience",
+        courseRef: "course-hardening",
+        title: "Quelles informations sont demandées de manière interactive lors de l'exécution de la commande 'auto secure' ? (Choisir 3)",
+        multi: true,
+        correctAnswers: [1, 2, 3],
+        options: [
+          "L'adresse IP publique du serveur de temps NTP principal.",
+          "Le mot de passe secret du mode enable (enable secret).",
+          "Le texte du message de bannière de sécurité (login banner).",
+          "La sélection des interfaces connectées au réseau public non sécurisé.",
+          "La clé privée RSA de 4096 bits pour le serveur SSH.",
+          "Les identifiants du pool d'adresses DHCP local."
+        ],
+        explanation: "En mode interactif, AutoSecure demande le mot de passe enable secret, le libellé de la bannière et la désignation des interfaces untrusted / trusted."
+      },
+      {
+        id: 17,
+        domain: "hardening",
+        domainName: "AutoSecure & Résilience",
+        courseRef: "course-hardening",
+        title: "Quel prérequis est rigoureusement nécessaire pour activer et utiliser le service Secure Copy Protocol (SCP) sur un routeur Cisco ?",
+        options: [
+          "Le protocole Telnet doit être activé comme méthode de secours d'urgence.",
+          "La commande globale 'ip scp server enable' doit être exécutée et SSH doit être fonctionnel.",
+          "Un utilisateur local avec un niveau de privilège 1 doit être configuré.",
+          "Le routeur doit disposer d'un certificat d'autorité CA public signé."
+        ],
+        correct: 1,
+        explanation: "SCP exploite le sous-système sécurisé de SSH et nécessite la commande explicite 'ip scp server enable' ainsi qu'un utilisateur local à privilège 15."
+      },
+      {
+        id: 18,
+        domain: "hardening",
+        domainName: "AutoSecure & Résilience",
+        courseRef: "course-hardening",
+        title: "Quelle commande permet de verrouiller l'image logicielle active de Cisco IOS dans la zone de stockage sécurisée du routeur ?",
+        options: [
+          "Router(config)# secure boot-image",
+          "Router(config)# image resilience enable",
+          "Router(config)# copy flash secure-image",
+          "Router(config)# lock ios-bootset"
+        ],
+        correct: 0,
+        explanation: "La commande officielle Cisco pour sécuriser l'image d'amorçage dans la fonction Resilient Configuration est 'secure boot-image'."
+      },
+      {
+        id: 19,
+        domain: "hardening",
+        domainName: "AutoSecure & Résilience",
+        courseRef: "course-hardening",
+        title: "Pour forcer l'authentification chiffrée MD5 pour tous les routeurs OSPF de l'aire dorsale (Area 0), quelles commandes sont nécessaires ? (Choisir 2)",
+        multi: true,
+        correctAnswers: [2, 3],
+        options: [
+          "Router(config-router)# area 0 authentication simple",
+          "Router(config)# ip ospf md5-password 1 key cisco",
+          "Router(config-router)# area 0 authentication message-digest",
+          "Router(config-if)# ip ospf message-digest-key 1 md5 [clé]",
+          "Router(config-if)# ip ospf priority 0 md5"
+        ],
+        explanation: "L'activation globale de la méthode s'effectue sous le processus OSPF ('area 0 authentication message-digest') et la clé est configurée sous l'interface ('ip ospf message-digest-key 1 md5 <clé>')."
+      },
+
+      // MODULE 6: SNMPv3
+      {
+        id: 20,
+        domain: "snmp",
+        domainName: "SNMPv3",
+        courseRef: "course-snmp",
+        title: "Quel niveau de sécurité SNMPv3 garantit l'authentification par hachage cryptographique mais ne chiffre PAS le contenu des paquets échangés ?",
+        options: [
+          "noAuthNoPriv",
+          "authNoPriv",
+          "authPriv",
+          "privNoAuth"
+        ],
+        correct: 1,
+        explanation: "'authNoPriv' active l'authentification (MD5/SHA) pour valider l'expéditeur, mais ne fournit aucune confidentialité/chiffrement (NoPriv)."
+      },
+      {
+        id: 21,
+        domain: "snmp",
+        domainName: "SNMPv3",
+        courseRef: "course-snmp",
+        title: "Quels algorithmes de chiffrement symétrique sont supportés par Cisco IOS pour assurer la confidentialité sous le profil SNMPv3 'authPriv' ?",
+        options: [
+          "DES, 3DES et AES",
+          "MD5 et SHA-1 exclusivement",
+          "RSA et Diffie-Hellman",
+          "RC4 et Blowfish"
+        ],
+        correct: 0,
+        explanation: "Pour la composante Priv (chiffrement des données), SNMPv3 supporte les algorithmes symétriques tels que DES, 3DES et AES."
+      },
+      {
+        id: 22,
+        domain: "snmp",
+        domainName: "SNMPv3",
+        courseRef: "course-snmp",
+        title: "Qu'est-ce qu'une MIB (Management Information Base) dans l'architecture de gestion de réseau SNMP ?",
+        options: [
+          "Le protocole de transport sécurisé assurant la livraison sans perte des paquets UDP.",
+          "Une base de données hiérarchique arborescente décrivant les variables et objets supervisables.",
+          "Une clé secrète pré-partagée utilisée pour valider les requêtes SNMP Inform.",
+          "Le logiciel agent exécuté sur la station d'administration centrale (NMS)."
+        ],
+        correct: 1,
+        explanation: "Une MIB est une structure hiérarchique normalisée dont chaque nœud identifié par un OID représente une variable monitorable de l'équipement."
+      },
+      {
+        id: 23,
+        domain: "snmp",
+        domainName: "SNMPv3",
+        courseRef: "course-snmp",
+        title: "Quel est le risque de sécurité fondamental associé aux versions héritées SNMPv1 et SNMPv2c justifiant la migration vers SNMPv3 ?",
+        options: [
+          "L'absence totale de synchronisation temporelle avec les serveurs d'horloge NTP.",
+          "La transmission en texte clair des chaînes de communauté (community strings).",
+          "L'incapacité d'exporter des données de télémétrie sur des liaisons Gigabit Ethernet.",
+          "Le blocage systématique des paquets SNMP par les tables de routage CEF."
+        ],
+        correct: 1,
+        explanation: "SNMPv1 et v2c s'appuient sur des chaînes de communauté transmises en clair sur le réseau, facilement interceptables par écoute passive."
+      },
+
+      // MODULE 7: AAA FONDAMENTAUX & DIFFÉRENCES
+      {
+        id: 24,
+        domain: "aaa",
+        domainName: "AAA & Protocoles",
+        courseRef: "course-aaa",
+        title: "Quelle est la différence fondamentale entre la commande 'login local' et l'authentification locale basée sur le framework AAA ('aaa new-model') ?",
+        options: [
+          "La commande 'login local' utilise des mots de passe chiffrés en MD5 tandis que AAA n'accepte que le texte clair.",
+          "'login local' ne permet pas de configurer des méthodes d'authentification de secours en cas d'échec du premier système.",
+          "'login local' exige l'emploi d'un serveur d'annuaire externe Active Directory obligatoire.",
+          "L'authentification AAA locale n'autorise la configuration que d'un seul compte d'accès administrateur."
+        ],
+        correct: 1,
+        explanation: "'login local' applique une méthode fixe sans solution de repli. AAA permet d'enchaîner des listes ordonnées de méthodes (méthode distante, puis base locale de secours)."
+      },
+      {
+        id: 25,
+        domain: "aaa",
+        domainName: "AAA & Protocoles",
+        courseRef: "course-aaa",
+        title: "Un technicien réseau utilise une carte génératrice de codes à jeton dynamique (Token Card) pour se connecter. Quel composant AAA cela valide-t-il ?",
+        options: [
+          "Auditing",
+          "Accounting",
+          "Authentication",
+          "Authorization"
+        ],
+        correct: 2,
+        explanation: "L'authentification (Authentication) répond à la question 'Qui êtes-vous ?' au moyen de facteurs tels que les mots de passe ou tokens."
+      },
+      {
+        id: 26,
+        domain: "aaa",
+        domainName: "AAA & Protocoles",
+        courseRef: "course-aaa",
+        title: "Un profil utilisateur est configuré de sorte qu'il ne puisse ouvrir qu'une session de transfert FTP sans accès au terminal CLI. Quel composant AAA applique cette règle ?",
+        options: [
+          "Authentication",
+          "Accounting",
+          "Authorization",
+          "Affiliation"
+        ],
+        correct: 2,
+        explanation: "L'autorisation (Authorization) définit les services et commandes spécifiques qu'une entité authentifiée a le droit d'exécuter."
+      },
+      {
+        id: 27,
+        domain: "aaa",
+        domainName: "AAA & Protocoles",
+        courseRef: "course-aaa",
+        title: "Quelle est la finalité principale de la commande de configuration globale 'aaa authorization' ?",
+        options: [
+          "Limiter ou autoriser les services et commandes qu'un utilisateur authentifié peut consommer.",
+          "Définir la liste des serveurs de temps qui valident les certificats d'accès.",
+          "Forcer la saisie périodique d'un code OTP lors d'une session de gestion inactive.",
+          "Exporter les journaux d'audit vers le serveur de comptabilité centralisé."
+        ],
+        correct: 0,
+        explanation: "'aaa authorization' sert à restreindre ou accorder l'accès aux commandes et aux fonctions réseau pour les utilisateurs authentifiés."
+      },
+      {
+        id: 28,
+        domain: "aaa",
+        domainName: "AAA & Protocoles",
+        courseRef: "course-aaa",
+        title: "Quel rôle précis remplit le composant 'Accounting' dans une infrastructure réseau d'entreprise ?",
+        options: [
+          "Il calcule les hachages cryptographiques des mots de passe enregistrés dans la configuration locale.",
+          "Il collecte, audite et enregistre les données de session (durée, volumétrie, commandes exécutées).",
+          "Il vérifie la présence de certificats valides lors de la négociation d'une session SSH.",
+          "Il définit les niveaux de privilèges attribués aux différents groupes d'ingénierie."
+        ],
+        correct: 1,
+        explanation: "L'Accounting enregistre l'historique complet des actions, des temps de connexion et des volumes échangés des opérateurs."
+      },
+
+      // MODULE 7: TACACS+ VS RADIUS
+      {
+        id: 29,
+        domain: "aaa",
+        domainName: "AAA & Protocoles",
+        courseRef: "course-tacacs-radius",
+        title: "Quelles sont les deux caractéristiques techniques exactes du protocole TACACS+ ? (Choisir 2)",
+        multi: true,
+        correctAnswers: [3, 4],
+        options: [
+          "Il opère sur le port UDP 1645 ou 1812.",
+          "Il ne chiffre exclusivement que la chaîne contenant le mot de passe utilisateur.",
+          "Il fusionne les mécanismes d'authentification et d'autorisation dans un paquet commun.",
+          "Il sépare distinctement les processus d'authentification et d'autorisation.",
+          "Il chiffre l'intégralité du corps du paquet réseau.",
+          "Il utilise par défaut le protocole de transport UDP sur le port 49."
+        ],
+        explanation: "TACACS+ chiffre l'intégralité du paquet de données (hors en-tête standard), utilise TCP port 49, et sépare strictement Authentification et Autorisation."
+      },
+      {
+        id: 30,
+        domain: "aaa",
+        domainName: "AAA & Protocoles",
+        courseRef: "course-tacacs-radius",
+        title: "Quelles sont les deux caractéristiques techniques spécifiques du protocole RADIUS ? (Choisir 2)",
+        multi: true,
+        correctAnswers: [0, 2],
+        options: [
+          "L'utilisation du protocole de transport UDP pour l'authentification et la comptabilité.",
+          "Le chiffrement complet de la totalité de la charge utile du paquet.",
+          "Le chiffrement exclusif du mot de passe de l'utilisateur.",
+          "La séparation nette des transactions d'authentification et d'autorisation.",
+          "L'utilisation native du port TCP 49 pour le dialogue avec le serveur."
+        ],
+        explanation: "RADIUS repose sur UDP (ports 1812/1813 ou 1645/1646), chiffre uniquement le champ mot de passe et combine Authentification et Autorisation."
+      },
+      {
+        id: 31,
+        domain: "aaa",
+        domainName: "AAA & Protocoles",
+        courseRef: "course-tacacs-radius",
+        title: "Quel protocole de transport et quel numéro de port sont officiellement employés par TACACS+ ?",
+        options: [
+          "TCP port 49",
+          "UDP port 49",
+          "TCP port 1812",
+          "UDP port 1813"
+        ],
+        correct: 0,
+        explanation: "TACACS+ utilise le protocole orienté connexion TCP sur le port 49."
+      },
+      {
+        id: 32,
+        domain: "aaa",
+        domainName: "AAA & Protocoles",
+        courseRef: "course-tacacs-radius",
+        title: "Quels ports UDP par défaut sont assignés aux services d'authentification et de comptabilité par l'IETF pour RADIUS (RFC 2865 / 2866) ?",
+        options: [
+          "UDP 1812 pour l'authentification et UDP 1813 pour la comptabilité",
+          "UDP 1645 pour l'authentification et TCP 1646 pour la comptabilité",
+          "UDP 49 pour l'authentification et TCP 49 pour la comptabilité",
+          "UDP 88 pour l'authentification et UDP 464 pour la comptabilité"
+        ],
+        correct: 0,
+        explanation: "Les ports standard IETF de RADIUS sont UDP 1812 (Authentication/Authorization) et UDP 1813 (Accounting)."
+      },
+      {
+        id: 33,
+        domain: "aaa",
+        domainName: "AAA & Protocoles",
+        courseRef: "course-tacacs-radius",
+        title: "Quelle action est indispensable pour assurer la confiance et chiffrer les échanges entre un client NAS Cisco et un serveur AAA (Cisco ISE / ACS) ?",
+        options: [
+          "Créer préalablement un tunnel VPN IPsec obligatoire entre les deux nœuds.",
+          "Configurer une clé secrète pré-partagée (shared secret key) rigoureusement identique sur les deux équipements.",
+          "Définir le paramètre 'single-connection' sur toutes les interfaces physiques.",
+          "Attribuer le niveau de privilège 15 au serveur d'authentification."
+        ],
+        correct: 1,
+        explanation: "Le chiffrement et la validation d'intégrité entre le routeur (client AAA) et le serveur distant reposent sur une clé partagée identique configurée de part et d'autre."
+      },
+      {
+        id: 34,
+        domain: "aaa",
+        domainName: "AAA & Protocoles",
+        courseRef: "course-tacacs-radius",
+        title: "Pourquoi TACACS+ est-il généralement préféré à RADIUS pour l'administration des équipements réseau (Device Administration) ?",
+        options: [
+          "Parce que TACACS+ est un standard multi-constructeur compatible avec tous les commutateurs du marché.",
+          "Parce qu'il permet le contrôle et l'autorisation commande par commande de chaque saisie d'un administrateur.",
+          "Parce qu'il consomme moins de mémoire vive en exploitant le protocole de datagramme UDP.",
+          "Parce qu'il dispense d'avoir à déclarer les adresses IP des routeurs sur le serveur central."
+        ],
+        correct: 1,
+        explanation: "Grâce à la séparation d'Authentication et d'Authorization, TACACS+ permet d'interroger le serveur à chaque commande tapée par l'administrateur pour l'autoriser ou la refuser."
+      },
+
+      // QUESTIONS SUPPLÉMENTAIRES RENFORCEMENT DE DOSE
+      {
+        id: 35,
+        domain: "privilege_cli",
+        domainName: "Privilèges & Vues",
+        courseRef: "course-privilege",
+        title: "Si un administrateur configure 'privilege exec level 5 traceroute', que se passe-t-il pour un utilisateur connecté avec un niveau de privilège 7 ?",
+        options: [
+          "L'utilisateur de niveau 7 n'a pas accès à la commande car elle appartient exclusivement au niveau 5.",
+          "L'utilisateur de niveau 7 a accès à la commande 'traceroute' en raison de la nature ascendante et cumulative des niveaux.",
+          "Le routeur génère une erreur de syntaxe exigeant que la commande soit déclarée à tous les niveaux intermédiaires.",
+          "La commande est automatiquement rétrogradée au niveau de privilège utilisateur 1."
+        ],
+        correct: 1,
+        explanation: "Les privilèges Cisco IOS sont hiérarchiques et cumulatifs : un niveau de privilège N hérite automatiquement de toutes les commandes assignées aux niveaux inférieurs (de 1 à N)."
+      },
+      {
+        id: 36,
+        domain: "privilege_cli",
+        domainName: "Privilèges & Vues",
+        courseRef: "course-views",
+        title: "Sous quel mode d'invite de commande peut-on intégrer la commande 'ping' dans une vue personnalisée nommée 'NOC-VIEW' ?",
+        options: [
+          "Router(config-view)# commands exec include ping",
+          "Router(config-parser)# add command ping to NOC-VIEW",
+          "Router(config)# permit view NOC-VIEW command ping",
+          "Router(view-exec)# include exec ping"
+        ],
+        correct: 0,
+        explanation: "Dans le sous-mode de vue 'Router(config-view)#', la directive s'écrit 'commands <mode> include <commande>'."
+      },
+      {
+        id: 37,
+        domain: "privilege_cli",
+        domainName: "Privilèges & Vues",
+        courseRef: "course-views",
+        title: "Quelle est la particularité d'une vue de type 'root view' dans le contexte Role-Based CLI ?",
+        options: [
+          "Elle est créée automatiquement et dispose des droits de modifier et configurer n'importe quelle vue du système.",
+          "Elle ne peut contenir que des commandes de diagnostic passif sans impact sur la configuration.",
+          "Elle est restreinte à un utilisateur se connectant uniquement via le port console physique.",
+          "Elle ne nécessite aucun mot de passe pour être activée par la commande 'enable view'."
+        ],
+        correct: 0,
+        explanation: "La 'root view' est la vue suprême (équivalente au niveau 15). C'est uniquement depuis la root view que l'on configure et administre les autres vues."
+      },
+      {
+        id: 38,
+        domain: "syslog_ntp",
+        domainName: "Syslog & NTP",
+        courseRef: "course-syslog",
+        title: "Un message Syslog porte le mnémonique '%SYS-2-MALLOCFAIL'. Quel niveau d'urgence ce message traduit-il ?",
+        options: [
+          "Alert (Niveau 1)",
+          "Critical (Niveau 2)",
+          "Error (Niveau 3)",
+          "Notice (Niveau 5)"
+        ],
+        correct: 1,
+        explanation: "Le chiffre entre les tirets ('-2-') correspond directement au niveau de sévérité, c'est-à-dire le niveau 2 (Critical)."
+      },
+      {
+        id: 39,
+        domain: "syslog_ntp",
+        domainName: "Syslog & NTP",
+        courseRef: "course-syslog",
+        title: "Quelle commande de configuration globale permet d'ajouter des horodatages détaillés avec la date et les millisecondes dans chaque message Syslog ?",
+        options: [
+          "Router(config)# service timestamps log datetime msec",
+          "Router(config)# logging timestamp millisecond enable",
+          "Router(config)# clock timezone log datetime precise",
+          "Router(config)# ntp log timestamps activate"
+        ],
+        correct: 0,
+        explanation: "La syntaxe standard Cisco IOS est 'service timestamps log datetime msec' (et équivalent pour 'debug')."
+      },
+      {
+        id: 40,
+        domain: "syslog_ntp",
+        domainName: "Syslog & NTP",
+        courseRef: "course-ntp",
+        title: "Quelle commande permet de configurer le routeur local pour qu'il synchronise son horloge sur l'adresse IP 10.10.10.50 ?",
+        options: [
+          "Router(config)# ntp server 10.10.10.50",
+          "Router(config)# clock set source 10.10.10.50",
+          "Router(config)# ntp peer master 10.10.10.50",
+          "Router(config)# time-server sync 10.10.10.50"
+        ],
+        correct: 0,
+        explanation: "La directive client 'ntp server <adresse-ip>' indique à Cisco IOS d'utiliser cette adresse comme serveur de référence."
+      },
+      {
+        id: 41,
+        domain: "hardening",
+        domainName: "AutoSecure & Résilience",
+        courseRef: "course-hardening",
+        title: "Lors de l'exécution d'AutoSecure, comment la sécurité des protocoles de découverte voisins (CDP et LLDP) est-elle généralement traitée sur les interfaces externes ?",
+        options: [
+          "Ces protocoles sont automatiquement désactivés sur les interfaces orientées vers l'extérieur pour éviter les fuites d'informations.",
+          "Le chiffrement AES-256 est activé sur les trames CDP de niveau 2.",
+          "Le routeur modifie périodiquement son nom d'hôte dans les annonces de découverte.",
+          "Le débit de diffusion des paquets CDP est multiplié par deux pour saturer les sondes adverses."
+        ],
+        correct: 0,
+        explanation: "CDP et LLDP transmettent des données détaillées en clair sur les équipements. AutoSecure les coupe impérativement sur les interfaces non fiables."
+      },
+      {
+        id: 42,
+        domain: "hardening",
+        domainName: "AutoSecure & Résilience",
+        courseRef: "course-hardening",
+        title: "Quelle commande permet de restaurer la running-config et l'image sécurisées après un incident majeur si la fonction Resilient Configuration est active ?",
+        options: [
+          "Les fichiers sécurisés sont immédiatement réutilisés au démarrage automatique par le chargeur ROMMON sans intervention manuelle.",
+          "Router# restore system resilient-flash",
+          "Router# copy nvram:secure-backup running-config",
+          "Router# format flash: restore-all"
+        ],
+        correct: 0,
+        explanation: "La fonction Resilient Configuration est conçue pour que le routeur puisse réamorcer de manière autonome même si un utilisateur a effacé la flash standard."
+      },
+      {
+        id: 43,
+        domain: "snmp",
+        domainName: "SNMPv3",
+        courseRef: "course-snmp",
+        title: "Dans la commande 'Router(config)# snmp-server group ADMIN v3 priv', que spécifie le mot-clé 'priv' ?",
+        options: [
+          "Il force l'utilisation combinée de l'authentification et du chiffrement pour les membres de ce groupe.",
+          "Il réserve ce groupe aux utilisateurs disposant du niveau de privilège 15 uniquement.",
+          "Il bloque les écritures SNMP SET pour limiter le groupe à des requêtes privées de lecture.",
+          "Il masque la chaîne de communauté lors de l'affichage de la running-config."
+        ],
+        correct: 0,
+        explanation: "Le mot-clé 'priv' sélectionne le niveau de sécurité authPriv (authentification obligatoire + chiffrement des données)."
+      },
+      {
+        id: 44,
+        domain: "snmp",
+        domainName: "SNMPv3",
+        courseRef: "course-snmp",
+        title: "Quel protocole de hachage peut être configuré pour l'option d'authentification lors de la création d'un utilisateur sous SNMPv3 ?",
+        options: [
+          "SHA-1 ou MD5",
+          "Diffie-Hellman Groupe 14",
+          "AES-GCM",
+          "WPA3-Enterprise"
+        ],
+        correct: 0,
+        explanation: "L'authentification de l'utilisateur sous SNMPv3 s'appuie sur des algorithmes de hachage sécurisés : HMAC-SHA ou HMAC-MD5."
+      },
+      {
+        id: 45,
+        domain: "aaa",
+        domainName: "AAA & Protocoles",
+        courseRef: "course-aaa",
+        title: "Considérons la syntaxe suivante : 'aaa authentication login default group radius local'. Que se passe-t-il si le serveur RADIUS est injoignable ?",
+        options: [
+          "La connexion échoue immédiatement car la première méthode est déclarée par défaut.",
+          "Le routeur bascule automatiquement sur la méthode suivante et vérifie les identifiants dans la base locale.",
+          "Le routeur autorise l'accès sans mot de passe en mode dégradé de secours.",
+          "La session VTY reste suspendue indéfiniment sans rendre la main au terminal."
+        ],
+        correct: 1,
+        explanation: "C'est l'essence du framework AAA : si le premier groupe (RADIUS) ne répond pas (timeout/panne), le routeur bascule sur la méthode de repli ('local')."
+      },
+      {
+        id: 46,
+        domain: "aaa",
+        domainName: "AAA & Protocoles",
+        courseRef: "course-tacacs-radius",
+        title: "Sous quelle RFC le protocole d'authentification réseau RADIUS a-t-il été initialement standardisé par l'IETF ?",
+        options: [
+          "RFC 2865",
+          "RFC 1918",
+          "RFC 4949",
+          "RFC 5246"
+        ],
+        correct: 0,
+        explanation: "RADIUS est normalisé par l'IETF dans la RFC 2865 (Authentication) et la RFC 2866 (Accounting)."
+      },
+      {
+        id: 47,
+        domain: "aaa",
+        domainName: "AAA & Protocoles",
+        courseRef: "course-tacacs-radius",
+        title: "Pourquoi un administrateur réseau configure-t-il la commande 'aaa authorization exec default group tacacs+ local' ?",
+        options: [
+          "Pour déterminer si l'utilisateur a le droit d'accéder à l'invite du shell EXEC (le prompt du routeur).",
+          "Pour forcer le chiffrement de toutes les commandes saisies sur le port AUX.",
+          "Pour journaliser l'heure de début et de fin de chaque administrateur dans un fichier texte.",
+          "Pour synchroniser les horloges matérielles des routeurs avec le serveur TACACS+."
+        ],
+        correct: 0,
+        explanation: "L'autorisation 'exec' contrôle si l'utilisateur est autorisé à démarrer une session de shell de commande (EXEC) sur l'équipement."
+      },
+      {
+        id: 48,
+        domain: "aaa",
+        domainName: "AAA & Protocoles",
+        courseRef: "course-tacacs-radius",
+        title: "Dans une configuration moderne Cisco IOS, quelle structure de commande déclare correctement un serveur TACACS+ avec son adresse IP et son secret ?",
+        options: [
+          "tacacs server TAC-SRV \n address ipv4 192.168.1.50 \n key MotDePasse123",
+          "server tacacs+ 192.168.1.50 secret MotDePasse123",
+          "ip tacacs-server host 192.168.1.50 password MotDePasse123",
+          "aaa-server tacacs 192.168.1.50 pre-shared-key MotDePasse123"
+        ],
+        correct: 0,
+        explanation: "La syntaxe Cisco IOS moderne utilise le bloc de commande 'tacacs server <nom>', puis sous ce bloc les sous-commandes 'address ipv4 ...' et 'key ...'."
+      },
+      {
+        id: 49,
+        domain: "aaa",
+        domainName: "AAA & Protocoles",
+        courseRef: "course-aaa",
+        title: "Si un utilisateur fournit un identifiant valide mais que le serveur AAA ne contient aucune règle d'autorisation pour son profil, que se passe-t-il par défaut ?",
+        options: [
+          "L'accès aux services demandés est refusé par mesure de sécurité.",
+          "Le routeur lui octroie les privilèges d'accès complets de niveau 15.",
+          "Le routeur lui crée automatiquement un compte invité temporaire.",
+          "L'utilisateur est redirigé vers une session Telnet non chiffrée."
+        ],
+        correct: 0,
+        explanation: "Le modèle de sécurité AAA fonctionne sur le principe du moindre privilège : si l'autorisation échoue ou n'accorde aucun droit, l'accès est rejeté."
+      },
+      {
+        id: 50,
+        domain: "syslog_ntp",
+        domainName: "Syslog & NTP",
+        courseRef: "course-ntp",
+        title: "Quelle est la valeur maximale de Stratum admise par le protocole NTP avant qu'un équipement ne soit déclaré non synchronisé et non valide ?",
+        options: [
+          "Stratum 16",
+          "Stratum 8",
+          "Stratum 32",
+          "Stratum 255"
+        ],
+        correct: 0,
+        explanation: "En NTP, le stratum 16 indique qu'un périphérique n'est pas synchronisé ou que la distance à l'horloge source est infinie (non atteignable)."
+      }
+    ];
+
+    // -------------------------------------------------------------
+    // GESTION DE L'ÉTAT DE L'APPLICATION
+    // -------------------------------------------------------------
+    let userAnswers = {}; // { qId: [selectedIndices] }
+    let currentFilter = 'all';
+    let remediationMode = false;
+    let remediationQueue = [];
+
+    // Formule docimologique stricte du professeur : 70% = 10/20
+    function calculateProfessorGrade(scorePercent) {
+      if (scorePercent <= 0) return 0;
+      if (scorePercent <= 70) {
+        // De 0% à 70% -> Note de 0.0 à 10.0
+        return (scorePercent / 70) * 10;
+      } else {
+        // De 70% à 100% -> Note de 10.0 à 20.0
+        return 10 + ((scorePercent - 70) / 30) * 10;
+      }
+    }
+
+    // Détection de chance basée sur l'homogénéité du domaine
+    function evaluateDomainMastery() {
+      const stats = {};
+      questionsData.forEach(q => {
+        if (!stats[q.domain]) {
+          stats[q.domain] = { domainName: q.domainName, total: 0, answered: 0, correct: 0, wrong: 0 };
+        }
+        stats[q.domain].total++;
+        if (userAnswers[q.id] !== undefined) {
+          stats[q.domain].answered++;
+          if (isQuestionCorrect(q, userAnswers[q.id])) {
+            stats[q.domain].correct++;
+          } else {
+            stats[q.domain].wrong++;
+          }
+        }
+      });
+      return stats;
+    }
+
+    function isQuestionCorrect(q, selected) {
+      if (!selected) return false;
+      if (q.multi) {
+        if (selected.length !== q.correctAnswers.length) return false;
+        return q.correctAnswers.every(ans => selected.includes(ans));
+      } else {
+        return selected[0] === q.correct;
+      }
+    }
+
+    function isAnswerSuspicious(q) {
+      // Une réponse juste est suspecte si l'utilisateur a fait au moins une erreur dans ce même domaine
+      const domainStats = evaluateDomainMastery()[q.domain];
+      if (!domainStats) return false;
+      const isCorrect = isQuestionCorrect(q, userAnswers[q.id]);
+      return isCorrect && domainStats.wrong > 0;
+    }
+
+    // -------------------------------------------------------------
+    // RENDU DU QCM
+    // -------------------------------------------------------------
+    function renderQuiz() {
+      const container = document.getElementById('questions-container');
+      container.innerHTML = '';
+
+      let list = questionsData;
+      if (remediationMode) {
+        list = questionsData.filter(q => remediationQueue.includes(q.id));
+      } else if (currentFilter !== 'all') {
+        list = questionsData.filter(q => q.domain === currentFilter);
+      }
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="q-card" style="text-align:center; padding: 40px;">
+            <h3>Aucune question dans cette vue.</h3>
+            <p style="color:var(--text-muted); margin-top:8px;">Toutes les lacunes de ce domaine ont été corrigées ou aucune question ne correspond au filtre.</p>
+            <button class="action-btn" style="width:auto; margin-top:16px;" onclick="setFilter('all', document.querySelector('.chip-btn'))">Afficher tout le QCM</button>
+          </div>
+        `;
+        return;
+      }
+
+      list.forEach((q, index) => {
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.id = `q-card-${q.id}`;
+
+        const isAnswered = userAnswers[q.id] !== undefined;
+        const correct = isAnswered ? isQuestionCorrect(q, userAnswers[q.id]) : false;
+        const suspicious = isAnswered && correct && isAnswerSuspicious(q);
+
+        if (isAnswered) {
+          card.classList.add(correct ? 'resolved-correct' : 'resolved-wrong');
+        }
+
+        let optionsHtml = '';
+        q.options.forEach((opt, optIdx) => {
+          let extraClass = '';
+          let isChecked = false;
+          if (isAnswered) {
+            extraClass = 'locked';
+            const wasSelected = userAnswers[q.id].includes(optIdx);
+            const isActualTarget = q.multi ? q.correctAnswers.includes(optIdx) : q.correct === optIdx;
+
+            if (wasSelected && isActualTarget) extraClass += ' opt-correct';
+            else if (wasSelected && !isActualTarget) extraClass += ' opt-wrong';
+            else if (!wasSelected && isActualTarget) extraClass += ' opt-correct';
+
+            if (wasSelected) isChecked = true;
+          }
+
+          const inputType = q.multi ? 'checkbox' : 'radio';
+
+          optionsHtml += `
+            <div class="option-item ${extraClass}" onclick="handleOptionSelect(${q.id}, ${optIdx})">
+              <input type="${inputType}" name="q-${q.id}" class="option-radio" ${isChecked ? 'checked' : ''} ${isAnswered ? 'disabled' : ''}>
+              <span class="option-text">${opt}</span>
+            </div>
+          `;
+        });
+
+        let feedbackHtml = '';
+        if (isAnswered) {
+          const statusClass = correct ? 'correct' : 'wrong';
+          const statusTitle = correct ? 'Correct !' : 'Faux.';
+          
+          let luckNotice = '';
+          if (suspicious) {
+            luckNotice = `
+              <div class="luck-warning">
+                <span>Indice de chance détecté : Tu as réussi cette question, mais ton taux d'échec sur le domaine <strong>${q.domainName}</strong> indique une fragilité. Cette notion sera à consolider.</span>
+              </div>
+            `;
+          }
+
+          feedbackHtml = `
+            <div class="feedback-box ${statusClass}">
+              <strong>${statusTitle}</strong> ${q.explanation}
+              ${luckNotice}
+              <div class="feedback-actions">
+                <button class="link-cours-btn" onclick="jumpToCourse('${q.courseRef}')">Consulter la fiche de cours associée &rarr;</button>
+              </div>
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="q-header">
+            <div class="q-meta">
+              <span class="q-index">#${q.id}</span>
+              <span class="q-domain">${q.domainName}</span>
+              ${q.multi ? '<span class="badge badge-blue">Choix multiple</span>' : ''}
+            </div>
+          </div>
+          <div class="q-title">${q.title}</div>
+          <div class="options-list">${optionsHtml}</div>
+          ${feedbackHtml}
+        `;
+
+        container.appendChild(card);
+      });
+
+      updateStats();
+    }
+
+    // -------------------------------------------------------------
+    // INTERACTION UTILISATEUR
+    // -------------------------------------------------------------
+    function handleOptionSelect(qId, optIdx) {
+      if (userAnswers[qId] !== undefined) return; // Déjà répondu
+
+      const q = questionsData.find(item => item.id === qId);
+      if (!q.multi) {
+        userAnswers[qId] = [optIdx];
+        renderQuiz();
+      } else {
+        // Gestion des choix multiples
+        if (!window.tempMulti) window.tempMulti = {};
+        if (!window.tempMulti[qId]) window.tempMulti[qId] = [];
+
+        const idxPos = window.tempMulti[qId].indexOf(optIdx);
+        if (idxPos === -1) {
+          window.tempMulti[qId].push(optIdx);
+        } else {
+          window.tempMulti[qId].splice(idxPos, 1);
+        }
+
+        // Si le nombre requis est sélectionné, valider
+        if (window.tempMulti[qId].length === q.correctAnswers.length) {
+          userAnswers[qId] = [...window.tempMulti[qId]];
+          delete window.tempMulti[qId];
+          renderQuiz();
+        } else {
+          // Mise à jour visuelle simple
+          const card = document.getElementById(`q-card-${qId}`);
+          const items = card.querySelectorAll('.option-item');
+          items[optIdx].querySelector('input').checked = (idxPos === -1);
+        }
+      }
+    }
+
+    function updateStats() {
+      const totalAnswered = Object.keys(userAnswers).length;
+      let totalCorrect = 0;
+      let totalWrong = 0;
+      let luckyCount = 0;
+
+      questionsData.forEach(q => {
+        if (userAnswers[q.id] !== undefined) {
+          if (isQuestionCorrect(q, userAnswers[q.id])) {
+            totalCorrect++;
+            if (isAnswerSuspicious(q)) {
+              luckyCount++;
+            }
+          } else {
+            totalWrong++;
+          }
+        }
+      });
+
+      const rawRate = totalAnswered > 0 ? (totalCorrect / totalAnswered) * 100 : 0;
+      const professorGrade = calculateProfessorGrade(rawRate);
+
+      // DOM updates
+      document.getElementById('stat-answered').innerText = `${totalAnswered} / ${questionsData.length}`;
+      document.getElementById('stat-correct').innerText = totalCorrect;
+      document.getElementById('stat-wrong').innerText = totalWrong;
+      document.getElementById('stat-luck').innerText = luckyCount;
+      document.getElementById('stat-rate').innerText = `${rawRate.toFixed(1)} %`;
+
+      const gradeEl = document.getElementById('calc-grade');
+      gradeEl.innerHTML = `${professorGrade.toFixed(1)}<span style="font-size:1.2rem">/20</span>`;
+      if (professorGrade >= 10.0) {
+        gradeEl.className = 'grade-value grade-pass';
+      } else {
+        gradeEl.className = 'grade-value grade-fail';
+      }
+
+      // Nombre d'éléments à rattraper (fautes + chances)
+      const remediationTargets = questionsData.filter(q => {
+        if (userAnswers[q.id] === undefined) return false;
+        return !isQuestionCorrect(q, userAnswers[q.id]) || isAnswerSuspicious(q);
+      }).map(q => q.id);
+
+      document.getElementById('remediation-count').innerText = remediationTargets.length;
+      updateDiagnosticView();
+    }
+
+    function startRemediationMode() {
+      const targets = questionsData.filter(q => {
+        if (userAnswers[q.id] === undefined) return false;
+        return !isQuestionCorrect(q, userAnswers[q.id]) || isAnswerSuspicious(q);
+      }).map(q => q.id);
+
+      if (targets.length === 0) {
+        alert("Excellente nouvelle : tu n'as actuellement aucune lacune ni réponse suspectée par chance ! Continue le QCM complet.");
+        return;
+      }
+
+      // Réinitialiser les réponses pour ces questions spécifiques afin de les rejouer
+      targets.forEach(id => {
+        delete userAnswers[id];
+      });
+
+      remediationQueue = targets;
+      remediationMode = true;
+      switchTab('quiz');
+      renderQuiz();
+    }
+
+    function resetAll() {
+      if (confirm("Réinitialiser l'ensemble de tes réponses et recommencer le test ?")) {
+        userAnswers = {};
+        remediationMode = false;
+        remediationQueue = [];
+        renderQuiz();
+      }
+    }
+
+    function setFilter(filter, el) {
+      remediationMode = false;
+      currentFilter = filter;
+      document.querySelectorAll('.chip-btn').forEach(btn => btn.classList.remove('active'));
+      el.classList.add('active');
+      renderQuiz();
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('view-quiz').classList.add('hidden');
+      document.getElementById('view-course').classList.add('hidden');
+      document.getElementById('view-diagnostic').classList.add('hidden');
+
+      if (tabId === 'quiz') {
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        document.getElementById('view-quiz').classList.remove('hidden');
+      } else if (tabId === 'course') {
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        document.getElementById('view-course').classList.remove('hidden');
+      } else if (tabId === 'diagnostic') {
+        document.querySelectorAll('.tab-btn')[2].classList.add('active');
+        document.getElementById('view-diagnostic').classList.remove('hidden');
+        updateDiagnosticView();
+      }
+    }
+
+    function jumpToCourse(anchorId) {
+      switchTab('course');
+      const target = document.getElementById(anchorId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+        target.classList.add('highlight-target');
+        setTimeout(() => target.classList.remove('highlight-target'), 2500);
+      }
+    }
+
+    function updateDiagnosticView() {
+      const container = document.getElementById('diagnostic-domain-list');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const domainData = evaluateDomainMastery();
+
+      for (const [key, item] of Object.entries(domainData)) {
+        const masteryRate = item.answered > 0 ? (item.correct / item.answered) * 100 : 0;
+        const row = document.createElement('div');
+        row.style.background = '#0f172a';
+        row.style.padding = '14px 18px';
+        row.style.borderRadius = '8px';
+        row.style.border = '1px solid #1e293b';
+
+        let statusBadge = '<span class="badge badge-blue">Non commencé</span>';
+        if (item.answered > 0) {
+          if (item.wrong === 0 && item.answered === item.total) {
+            statusBadge = '<span class="badge" style="background:#065f46; color:#a7f3d0;">Maîtrisé (100%)</span>';
+          } else if (item.wrong > 0) {
+            statusBadge = `<span class="badge badge-red">Fragile (${item.wrong} faute(s))</span>`;
+          } else {
+            statusBadge = '<span class="badge badge-amber">En cours</span>';
+          }
+        }
+
+        row.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <strong style="color:#f8fafc;">${item.domainName}</strong>
+            ${statusBadge}
+          </div>
+          <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:16px;">
+            <span>Répondues : ${item.answered} / ${item.total}</span>
+            <span>Justes : ${item.correct}</span>
+            <span>Erreurs : ${item.wrong}</span>
+            <span>Taux actuel : ${masteryRate.toFixed(0)}%</span>
+          </div>
+        `;
+        container.appendChild(row);
+      }
+    }
+
+    // Initialisation
+    renderQuiz();
+  </script>
+</body>
+</html>
